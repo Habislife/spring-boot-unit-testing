@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokemonreview.api.controllers.ReviewController;
 import com.pokemonreview.api.dto.PokemonDto;
 import com.pokemonreview.api.dto.ReviewDto;
-import com.pokemonreview.api.models.Pokemon;
-import com.pokemonreview.api.models.Review;
 import com.pokemonreview.api.service.ReviewService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -39,40 +37,31 @@ public class ReviewControllerTests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Pokemon pokemon;
-    private Review review;
+
     private ReviewDto reviewDto;
     private PokemonDto pokemonDto;
 
     @BeforeEach
     public void init() {
-        pokemon = Pokemon.builder()
-                .name("pikachu")
-                .type("electric").build();
         pokemonDto = PokemonDto.builder()
                 .name("pikachu")
                 .type("electric").build();
-        review = Review.builder()
-                .title("title")
-                .content("content")
-                .stars(5).build();
         reviewDto = ReviewDto.builder()
                 .title("review title")
                 .content("test content")
                 .stars(5).build();
-
     }
 
     @Test
     public void ReviewController_GetReviewsByPokemonId_ReturnReviewDto() throws Exception {
         int pokemonId = 1;
-        when(reviewService.getReviewsByPokemonId(pokemonId)).thenReturn(Arrays.asList(reviewDto));
+        when(reviewService.getReviewsByPokemonId(pokemonId)).thenReturn(Collections.singletonList(reviewDto));
 
         ResultActions response = mockMvc.perform(get("/api/pokemon/1/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(pokemonDto)));
         response.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(Arrays.asList(reviewDto).size())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(Collections.singletonList(reviewDto).size())));
     }
 
     @Test
