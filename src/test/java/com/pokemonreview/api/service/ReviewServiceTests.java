@@ -1,6 +1,5 @@
 package com.pokemonreview.api.service;
 
-import com.pokemonreview.api.dto.PokemonDto;
 import com.pokemonreview.api.dto.ReviewDto;
 import com.pokemonreview.api.models.Pokemon;
 import com.pokemonreview.api.models.Review;
@@ -16,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,14 +34,10 @@ public class ReviewServiceTests {
     private Pokemon pokemon;
     private Review review;
     private ReviewDto reviewDto;
-    private PokemonDto pokemonDto;
 
     @BeforeEach
     public void init() {
         pokemon = Pokemon.builder()
-                .name("pikachu")
-                .type("electric").build();
-        pokemonDto = PokemonDto.builder()
                 .name("pikachu")
                 .type("electric").build();
         review = Review.builder()
@@ -67,7 +62,7 @@ public class ReviewServiceTests {
     @Test
     public void ReviewService_GetReviewsByPokemonId_ReturnsReviewDto(){
         int pokemonId = 1;
-        when(reviewRepository.findByPokemonId(pokemonId)).thenReturn(Arrays.asList(review));
+        when(reviewRepository.findByPokemonId(pokemonId)).thenReturn(Collections.singletonList(review));
         List<ReviewDto> pokemonReturn = reviewService.getReviewsByPokemonId(pokemonId);
         Assertions.assertThat(pokemonReturn).isNotNull();
     }
@@ -85,10 +80,10 @@ public class ReviewServiceTests {
     }
 
     @Test
-    public void ReviewService_UpdatePoken_ReturnsReviewDto(){
+    public void ReviewService_UpdatePokemon_ReturnsReviewDto(){
         int pokemonId = 1;
         int reviewId = 1;
-        pokemon.setReviews(Arrays.asList(review));
+        pokemon.setReviews(Collections.singletonList(review));
         review.setPokemon(pokemon);
         when(reviewRepository.findById(reviewId)).thenReturn(Optional.of(review));
         when(pokemonRepository.findById(pokemonId)).thenReturn(Optional.of(pokemon));
@@ -102,7 +97,7 @@ public class ReviewServiceTests {
     public void ReviewService_DeletePokemonById_ReturnVoid(){
         int pokemonId = 1;
         int reviewId = 1;
-        pokemon.setReviews(Arrays.asList(review));
+        pokemon.setReviews(Collections.singletonList(review));
         review.setPokemon(pokemon);
         when(reviewRepository.findById(reviewId)).thenReturn(Optional.of(review));
         when(pokemonRepository.findById(pokemonId)).thenReturn(Optional.of(pokemon));
