@@ -119,7 +119,7 @@ public class PokemonControllerTests {
     }
 
     @Test
-    public void PokemonController_DeletePokemon_ReturnPokemonDto() throws Exception {
+    public void PokemonController_DeletePokemon_ReturnOk() throws Exception {
         int pokemonId = 1;
         doNothing().when(pokemonService).deletePokemonId(pokemonId);
 
