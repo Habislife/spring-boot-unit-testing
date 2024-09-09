@@ -1,6 +1,5 @@
 package com.pokemonreview.api.repository;
 
-import com.pokemonreview.api.models.Pokemon;
 import com.pokemonreview.api.models.Review;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,12 +13,12 @@ import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class ReviewRepositoryTest {
+public class ReviewRepositoryTests {
 
     private ReviewRepository reviewRepository;
 
     @Autowired
-    public ReviewRepositoryTest(ReviewRepository reviewRepository) {
+    public ReviewRepositoryTests(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
     }
 
