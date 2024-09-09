@@ -4,9 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokemonreview.api.controllers.PokemonController;
 import com.pokemonreview.api.dto.PokemonDto;
 import com.pokemonreview.api.dto.PokemonResponse;
-import com.pokemonreview.api.dto.ReviewDto;
-import com.pokemonreview.api.models.Pokemon;
-import com.pokemonreview.api.models.Review;
 import com.pokemonreview.api.service.PokemonService;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,28 +39,14 @@ public class PokemonControllerTests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Pokemon pokemon;
-    private Review review;
-    private ReviewDto reviewDto;
+
     private PokemonDto pokemonDto;
 
     @BeforeEach
     public void init() {
-        pokemon = Pokemon.builder()
-                .name("pikachu")
-                .type("electric").build();
         pokemonDto = PokemonDto.builder()
                 .name("pikachu")
                 .type("electric").build();
-        review = Review.builder()
-                .title("title")
-                .content("content")
-                .stars(5).build();
-        reviewDto = ReviewDto.builder()
-                .title("review title")
-                .content("test content")
-                .stars(5).build();
-
     }
 
     @Test
